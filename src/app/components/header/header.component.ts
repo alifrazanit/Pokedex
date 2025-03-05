@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnChanges, SimpleChanges } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,7 +31,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ])
   ]
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnChanges {
   protected menuStack: 'open' | 'closed' = 'closed';
 
   @HostListener('window:scroll', [])
@@ -40,5 +40,9 @@ export class HeaderComponent {
     this.menuStack = scrollTop > 70 ? 'open' : 'closed';
     console.log('scrollTop', scrollTop)
     console.log('menuStack', this.menuStack)
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    
   }
 }

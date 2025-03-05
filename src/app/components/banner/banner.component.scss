@@ -1,0 +1,80 @@
+.banner {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(circle, #ffffff, #ffcc01);
+  padding: 2rem;
+  .banner-text-1 {
+    width: 50rem;
+    height: auto;
+  }
+  .banner-text-2 {
+    width: 30rem;
+    height: auto;
+    margin-top: -3rem;
+  }
+  .image-container {
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .list-pokemon {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    .fly-pokemon {
+      justify-content: space-between;
+      width: 100%;
+    }
+    .list-container {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+    }
+    .small-pokemon {
+      margin-top: -5rem;
+    }
+    .bigger-pokemon > * {
+      margin-left: -20px;
+      margin-right: -20px;
+    }
+    .small-pokemon > * {
+      margin-left: -8px;
+      margin-right: -8px;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .banner {
+    .banner-text-1 {
+      width: 100%;
+    }
+    .banner-text-2 {
+      width: 70%;
+      margin-top: -3rem;
+    }
+    .list-pokemon {
+      .fly-pokemon {
+        .pokemon-fly-1,
+        .pokemon-fly-2 {
+          width: 20%;
+        }
+      }
+      .small-pokemon {
+        margin-top: -3rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 635px) {
+  .banner {
+    .banner-text-2 {
+      margin-top: -1rem;
+    }
+  }
+}
