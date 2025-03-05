@@ -1,4 +1,16 @@
 .main-content-home{
     padding: 1rem 1.5rem;
     background-color: #192A56;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 630px) {
+    .main-content-home{
+        gap: 10px;
+        padding: 10px;
+    }
 }

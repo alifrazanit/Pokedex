@@ -20,7 +20,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
       })),
       state('open', style({ 
         position: 'fixed', 
-        top: 0
+        top: 0,
+        zIndex:99
       })),
       transition('closed => open', [
         animate('200ms ease-in', style({ transform: 'translateY(0)', top: 0 }))
