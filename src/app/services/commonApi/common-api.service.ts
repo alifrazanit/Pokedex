@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '@env/environment';
 
 interface ResponseAPI {
   count: number;
@@ -15,7 +14,7 @@ interface ResponseAPI {
   providedIn: 'root'
 })
 export class CommonApiService {
-  private BASEURL: string = environment.pokemonApi;
+  // 
   constructor(
     private http: HttpClient
   ) { }
@@ -35,9 +34,8 @@ export class CommonApiService {
       params: params ? new HttpParams({ fromObject: params }) : undefined
     };
 
-    return this.http.get<ResponseAPI>(`${this.BASEURL}${url}`, options).pipe(
+    return this.http.get<ResponseAPI>(`${url}`, options).pipe(
       catchError(error => {
-        console.error('HTTP GET Error:', error);
         return throwError(() => new Error('Something went wrong. Please try again.'));
       })
     );
@@ -48,7 +46,7 @@ export class CommonApiService {
       // headers: this.getHeaders(),
       params:  params ? new HttpParams({ fromObject: params }) : undefined
     }
-    return this.http.post(`${this.BASEURL}${url}`, body, options).pipe(
+    return this.http.post(`${url}`, body, options).pipe(
       catchError(error => {
         console.error('HTTP POST Error:', error);
         return throwError(() => new Error('Something went wrong. Please try again.'));
@@ -61,7 +59,7 @@ export class CommonApiService {
       // headers: this.getHeaders(),
       params:  params ? new HttpParams({ fromObject: params }) : undefined
     }
-    return this.http.put(`${this.BASEURL}${url}`, body, options).pipe(
+    return this.http.put(`${url}`, body, options).pipe(
       catchError(error => {
         console.error('HTTP PUT Error:', error);
         return throwError(() => new Error('Something went wrong. Please try again.'));
@@ -74,7 +72,7 @@ export class CommonApiService {
       // headers: this.getHeaders(),
       params:  params ? new HttpParams({ fromObject: params }) : undefined
     }
-    return this.http.delete(`${this.BASEURL}${url}`, options).pipe(
+    return this.http.delete(`${url}`, options).pipe(
       catchError(error => {
         console.error('HTTP DELETE Error:', error);
         return throwError(() => new Error('Something went wrong. Please try again.'));

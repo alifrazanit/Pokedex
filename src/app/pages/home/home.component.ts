@@ -5,6 +5,7 @@ import { CardComponent } from '@components/card/card.component';
 import { FieldSearchComponent } from '@components/field-search/field-search.component';
 import { HeaderComponent } from '@components/header/header.component';
 import { PokemonTypeService } from '@services/pokemonType/pokemon-type.service';
+import { DDLPokemonType } from 'src/app/interfaces/DDLPokemonType';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ import { PokemonTypeService } from '@services/pokemonType/pokemon-type.service';
   standalone: true
 })
 export class HomeComponent implements OnInit {
+  DDLData: DDLPokemonType[] = [];
 
   constructor(
     private pokemonTypeService:PokemonTypeService
@@ -32,13 +34,7 @@ export class HomeComponent implements OnInit {
 
   getPokemonType(){
     this.pokemonTypeService.getPokemonType().subscribe(res => {
-      const count = res.count;
-      const next = res.next;
-      const previous = res.previous;
-      const results = res.results;
-
-      console.log('results', results)
-
+      this.DDLData = res;
     })
   }
 }
