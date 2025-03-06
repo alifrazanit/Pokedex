@@ -3,22 +3,17 @@
     <div class="main-pokemon-content">
         <div class="pokemon-detail">
             <div class="header-container">
-                <h2 class="pokemon-code">00001</h2>
-                <h1 class="pokemon-name">Charizard</h1>
+                <h2 class="pokemon-code">{{pokemon.id}}</h2>
+                <h1 class="pokemon-name">{{pokemon.name}}</h1>
             </div>
             <div class="body-container">
                 <div class="image-container">
-                    <img src="/pokemon/pokemon-bg-1.svg" alt="Pokemon Image" class="main-image" />
+                    <img [src]="pokemon.image" alt="Pokemon Image" class="main-image" />
                 </div>
                 <div class="list-type-pokemon">
-                    <div class="image-container-type">
-                        <img src="/list-type/Fire-bg.svg" alt="Type of Pokemon" class="type-pokemon" />
-                        <h3>Flying</h3>
-                    </div>
-                    <div class="image-container-type">
-                        <img src="/list-type/Electric-bg.svg" alt="Type of Pokemon" class="type-pokemon" />
-                        <h3>Flying</h3>
-                    </div>
+                    @for(item of pokemon.types; track item.id){
+                        <img [src]="item.sprites['generation-vi']['omega-ruby-alpha-sapphire']['name_icon']" class="type" />
+                    }
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/home/home.component').then(c => c.HomeComponent)
             },
             {
-                path: 'pokemon',
+                path: 'pokemon/:name',
                 loadComponent: () => import('./pages/pokemon/pokemon-detail/pokemon-detail.component').then(c => c.PokemonDetailComponent)
             }
         ]

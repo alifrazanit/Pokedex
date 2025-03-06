@@ -12,6 +12,7 @@ import { catchError, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { CommonApiService } from '@services/commonApi/common-api.service';
 import { UtilsService } from '@utils/utils.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   imports: [
@@ -43,9 +44,9 @@ export class HomeComponent implements OnInit {
     const position = window.innerHeight + window.scrollY;
     const max = document.documentElement.scrollHeight;
     if (position >= max) {
-      if(!this.isFilter){
+      if (!this.isFilter) {
         this.getNextPokemon();
-      } 
+      }
     }
   }
 
@@ -53,7 +54,8 @@ export class HomeComponent implements OnInit {
     private pokemonTypeService: PokemonTypeService,
     private pokemonService: PokemonService,
     private commonApi: CommonApiService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private router: Router
   ) { }
 
 
@@ -128,8 +130,11 @@ export class HomeComponent implements OnInit {
 
   }
 
-  onDetail(event: any) {
-
+  onDetail(data: any) {
+    if (data) {
+      const name = `${String(data.name).charAt(0).toLowerCase()}${String(data.name).slice(1)}`;
+      this.router.navigate(['/', 'pokemon', name])
+    }
   }
 
   onFavorite(event: any) {

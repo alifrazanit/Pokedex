@@ -72,4 +72,8 @@ export class CardComponent implements OnChanges {
     })
   }
 
+
+  onClickDetail(){
+    this.onClick.emit(this.pokemon);
+  }
 }

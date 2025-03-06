@@ -5,8 +5,6 @@ import { catchError, forkJoin, of, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pokemon } from 'src/app/interfaces/PokemonInterface';
 import { UtilsService } from '@utils/utils.service';
-import { DDLPokemonType } from '@interfaces/DDLPokemonType';
-
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +62,8 @@ export class PokemonService {
     )
   }
 
-  
+  getPokemonByName(name: string){
+    return this.commonApi.get(`${this.BASEURL}${this.URL}/${name}`)
+  }
 
 }
