@@ -9,16 +9,16 @@
             </button>
         </div>
         <div class="body-card-content">
-            <div class="container-image"d>
-                <img src="/pokemon/pokemon-bg-1.svg" alt="Main Image" class="main-image" />
+            <div class="container-image">
+                <img [src]="pokemon.image" alt="Main Image" class="main-image" />
             </div>
         </div>
         <div class="footer-card-content">
             <div class="pokemon-code-container">
-                <h2 class="pokemon-code">00001</h2>
+                <h2 class="pokemon-code">{{pokemon.id }}</h2>
             </div>
             <div class="pokemon-name-container">
-                <h1 class="pokemon-name">Charizard</h1>
+                <h1 class="pokemon-name">{{pokemon.name }}</h1>
             </div>
         </div>
         <img src="/pokeball.png" class="bg-image" />

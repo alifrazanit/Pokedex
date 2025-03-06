@@ -26,7 +26,8 @@
       "@template/*":["src/app/template/*"],
       "@utils/*":["src/app/utils/*"],
       "@env/*":["src/environments/*"],
-      "@interfaces/*":["src/interfaces/*"],
+      "@interfaces/*":["src/app/interfaces/*"],
+      "@pipes/*":["src/app/pipes/*"],
     },
   },
   "angularCompilerOptions": {

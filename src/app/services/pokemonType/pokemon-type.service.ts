@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommonApiService } from '@services/commonApi/common-api.service';
 import { catchError, forkJoin, of, switchMap } from 'rxjs';
-import { map, mergeMap, takeUntil } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { DDLPokemonType } from 'src/app/interfaces/DDLPokemonType';
 
@@ -34,9 +34,10 @@ export class PokemonTypeService {
         const pokemonTypeWithDetail: any = res;
         const dataReady: DDLPokemonType[] = [];
         for (let i = 0; i < pokemonTypeWithDetail.length; i++) {
+          const icon = pokemonTypeWithDetail[i].sprites['generation-viii']['brilliant-diamond-and-shining-pearl']['name_icon'];
           dataReady.push({
             id: pokemonTypeWithDetail[i].id,
-            icon: pokemonTypeWithDetail[i].sprites['generation-viii']['brilliant-diamond-and-shining-pearl']['name_icon'] ? pokemonTypeWithDetail[i].sprites['generation-viii']['brilliant-diamond-and-shining-pearl']['name_icon'] : '/list-type/Normal-sm.svg',
+            icon: icon ? icon : '/list-type/Normal-sm.svg',
             label: `${String(pokemonTypeWithDetail[i].name).charAt(0).toUpperCase()}${String(pokemonTypeWithDetail[i].name).slice(1).toLowerCase()}`,
             value: pokemonTypeWithDetail[i].name
           })
@@ -45,4 +46,5 @@ export class PokemonTypeService {
       })
     );
   }
+
 }
