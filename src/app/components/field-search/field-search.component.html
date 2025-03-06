@@ -4,15 +4,15 @@
             <div class="form-field">
                 <mat-label>Filter Box</mat-label>
                 <div class="form-field-button">
-                    <mat-form-field appearance="outline">
-                        <mat-select>
-                            <mat-option value="option1">
-                                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon> Option
-                            </mat-option>
-                            <mat-option value="option2">Option</mat-option>
-                            <mat-option value="option3">Option</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <form [formGroup]="filterForm">
+                        <mat-form-field appearance="outline">
+                            <mat-select formControlName="pokemonType" placeholder="Filter by Pokemon Type">
+                                <mat-option value="option1" style="color: black;">
+                                    <img src="/list-type/Dark-sm.svg" alt="image-ddl" class="icon"/> Option
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </form>
                     <button mat-flat-button class="btn-find">Filter</button>
                 </div>
             </div>

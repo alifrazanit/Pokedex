@@ -1,9 +1,10 @@
+
 .field-search-container {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, #FFCC01 50%, #192A56 50%);
+  background: linear-gradient(to bottom, #ffcc01 50%, #192a56 50%);
   .field-search {
     width: 70%;
     height: auto;
@@ -23,11 +24,24 @@
         align-items: center;
         gap: 10px;
         justify-content: space-between;
-        mat-form-field{
+        form{
           width: 100%;
+          mat-form-field {
+            width: 100%;
+            mat-select {
+              color: black;
+              mat-option {
+                color: black;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+              }
+            }
+          }
         }
-        .btn-find{
-          background-color: #4CD137;
+      
+        .btn-find {
+          background-color: #4cd137;
           border-radius: 5px;
           color: #ffffff;
         }
@@ -37,7 +51,7 @@
 }
 
 @media (max-width: 635px) {
-  .field-search-container{
+  .field-search-container {
     .field-search {
       width: 95%;
     }
