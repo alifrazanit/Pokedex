@@ -37,4 +37,8 @@ export class HomeComponent implements OnInit {
       this.DDLData = res;
     })
   }
+
+  onChooseFilter(event: any){
+    console.log('onChooseFilter', event)
+  }
 }

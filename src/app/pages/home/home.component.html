@@ -1,6 +1,6 @@
 <app-header />
 <app-banner />
-<app-field-search [DDLData]="DDLData"/>
+<app-field-search [DDLData]="DDLData" (onFilterEvent)="onChooseFilter($event)"/>
 <div class="main-content-home">
     <app-card />
     <app-card />

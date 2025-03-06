@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DDLPokemonType } from 'src/app/interfaces/DDLPokemonType';
 
@@ -43,13 +43,18 @@ export class FieldSearchComponent implements OnInit, OnChanges {
 
   initForm() {
     this.filterForm = new FormGroup({
-      pokemonType: new FormControl(''),
+      pokemonType: new FormControl('', Validators.required),
     });
   }
 
   onFilter(){
-    const payload = this.filterForm.getRawValue();
-    this.onFilterEvent.emit(payload)
+    if(this.filterForm.invalid){
+      this.filterForm.markAsTouched();
+      this.filterForm.updateValueAndValidity();
+    } else {
+      const payload = this.filterForm.getRawValue();
+      this.onFilterEvent.emit(payload)
+    }
   }
 
 }

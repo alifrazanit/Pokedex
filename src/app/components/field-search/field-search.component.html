@@ -8,12 +8,16 @@
                         <mat-form-field appearance="outline">
                             <mat-select formControlName="pokemonType" placeholder="Filter by Pokemon Type">
                                 @for (item of ddlPokemonType; track item.value) {
-                                    <mat-option value="option1" >
-                                        <img [src]="item.icon" alt="image-ddl" class="icon"/> {{item.label}}
-                                    </mat-option>
+                                <mat-option [value]="item.value">
+                                    <img [src]="item.icon" alt="image-ddl" class="icon" /> {{item.label}}
+                                </mat-option>
                                 }
                             </mat-select>
+
                         </mat-form-field>
+                        @if(filterForm.get('pokemonType')?.invalid && filterForm.get('pokemonType')?.touched){
+                        <small>Please Select Pokemon Type</small>
+                        }
                     </form>
                     <button mat-flat-button class="btn-find" (click)="onFilter()">Filter</button>
                 </div>
