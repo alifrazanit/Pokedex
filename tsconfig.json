@@ -24,7 +24,8 @@
       "@pages/*":["src/app/pages/*"],
       "@services/*":["src/app/services/*"],
       "@template/*":["src/app/template/*"],
-      "@utils/*":["src/app/utils/*"]
+      "@utils/*":["src/app/utils/*"],
+      "@env/*":["src/environments/*"],
     },
   },
   "angularCompilerOptions": {

@@ -39,8 +39,6 @@ export class HeaderComponent implements OnChanges {
   onScroll(): void {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     this.menuStack = scrollTop > 70 ? 'open' : 'closed';
-    console.log('scrollTop', scrollTop)
-    console.log('menuStack', this.menuStack)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
