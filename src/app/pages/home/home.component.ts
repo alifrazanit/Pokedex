@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BannerComponent } from '@components/banner/banner.component';
 import { CardComponent } from '@components/card/card.component';
@@ -18,6 +18,9 @@ import { HeaderComponent } from '@components/header/header.component';
   styleUrl: './home.component.scss',
   standalone: true
 })
-export class HomeComponent {
-  
+export class HomeComponent implements OnInit {
+  constructor(){}
+  ngOnInit(): void {
+    
+  }
 }
