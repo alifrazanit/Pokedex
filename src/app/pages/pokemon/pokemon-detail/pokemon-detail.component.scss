@@ -88,12 +88,36 @@
           margin: 0;
         }
       }
+      .pokemon-ability{
+        .title {
+          font-family: "Orbitron", sans-serif;
+          font-weight: 400;
+          margin: 0;
+        }
+        .list-ability{
+          margin-top: 1rem;
+          .title-ability{
+            font-weight: bold;
+          }
+          .desc-ability{
+            font-family: "Open Sans", sans-serif;
+          }
+        }
+      }
     }
     .row-1 {
       margin-top: 2rem;
       width: 50%;
       align-items: start;
       justify-content: space-around;
+    }
+    .row-2{
+      box-shadow: #0abde3 0px 7px 29px 0px;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 2rem;
+      border: 2px solid white;
+      width: 80%;
     }
   }
 }

@@ -43,14 +43,14 @@
                 }
             </div>
         </div>
-        <div class="characteristic-details-row">
+        <div class="characteristic-details-row row-2">
             <div class="pokemon-ability">
                 <h1 class="title">Ability</h1>
                 @defer(){
                 @for(item of pokemon.abilities; track item.id){
                 <div class="list-ability">
                     <div class="title-ability">
-                        {{item?.label?.name}}
+                        <span>{{item?.label?.name}}</span>
                     </div>
                     <div class="desc-ability">
                         {{item?.effect_entries?.effect}}
