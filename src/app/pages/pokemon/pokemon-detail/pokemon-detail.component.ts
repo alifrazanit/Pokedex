@@ -8,11 +8,13 @@ import { PokemonService } from '@services/pokemonService/pokemon.service';
 import { PokemonTypeService } from '@services/pokemonType/pokemon-type.service';
 import { UtilsService } from '@utils/utils.service';
 import { catchError, forkJoin, map, of, switchMap, tap } from 'rxjs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-pokemon-detail',
   imports: [
     HeaderComponent,
+    MatProgressBarModule
   ],
   templateUrl: './pokemon-detail.component.html',
   styleUrl: './pokemon-detail.component.scss',
@@ -31,6 +33,7 @@ export class PokemonDetailComponent implements OnInit {
     types: null,
     weight: 0
   };
+ 
   maxPokemon: number = 0;
 
   constructor(
@@ -116,6 +119,7 @@ export class PokemonDetailComponent implements OnInit {
 
       this.pokemon = {
         ...this.pokemon,
+        stats: this.simplyfyStats(this.pokemon.stats),
         abilities: this.simplyfyAbilities(abilities),
         forms: this.simplyfyForm(forms),
         types: this.simplyfyTypes(types)
@@ -161,5 +165,23 @@ export class PokemonDetailComponent implements OnInit {
       })
     }
     return TypesLocal;
+  }
+
+  simplyfyStats(stats: any){
+    const dataReady: any[] = [];
+    const numberLoop: any[] = [];
+    if(stats.length){
+      stats.forEach((s: any) => {
+        const count = Math.floor(Number(s.base_stat) / 10);
+        dataReady.push({
+          id: Math.random(),
+          name: s['stat']['name'],
+          label: `${String(s.stat.name).toUpperCase()}`,
+          countStars: numberLoop.push(count),
+          base_stat: s.base_stat
+        })
+      });
+    }
+    return dataReady;
   }
 }

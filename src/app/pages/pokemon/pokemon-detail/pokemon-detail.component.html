@@ -10,11 +10,6 @@
                 <div class="image-container">
                     <img [src]="pokemon.image" alt="Pokemon Image" class="main-image" />
                 </div>
-                <!-- <div class="list-type-pokemon">
-                    @for(item of pokemon.types; track item.id){
-                        <img [src]="item.sprites['generation-vi']['omega-ruby-alpha-sapphire']['name_icon']" class="type" />
-                    }
-                </div> -->
             </div>
         </div>
         <div class="characteristic-details-row row-1">
@@ -44,6 +39,24 @@
             </div>
         </div>
         <div class="characteristic-details-row row-2">
+            <div class="pokemon-stats">
+                <h1 class="title">Stats</h1>
+                <div class="list-stats">
+                    @defer(){
+                    @for(item of pokemon.stats; track item.id){
+                    <div class="hp-bar">
+                        <h2>{{item.label}}:</h2>
+                        @for(item of pokemon.countStars;){
+                        <img src="/list-type/Normal-sm.svg" class="rate" />
+                        }
+                    </div>
+                    }
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="characteristic-details-row row-3">
             <div class="pokemon-ability">
                 <h1 class="title">Ability</h1>
                 @defer(){
@@ -60,5 +73,6 @@
                 }
             </div>
         </div>
+
     </div>
 </div>

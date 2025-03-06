@@ -1,17 +1,18 @@
 .main-pokemon-detail {
-  height: calc(100vh - 64px);
+  height: auto;
   background-color: #1b252f;
   padding-left: 3rem;
   padding-right: 3rem;
   .main-pokemon-content {
     background-color: #192a56;
     width: 100%;
-    height: calc(100vh - 64px);
+    height: auto;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-flow: column;
+    padding-bottom: 5rem;
     .pokemon-detail {
       width: 30rem;
       height: auto;
@@ -72,7 +73,8 @@
       display: flex;
       flex-flow: row;
       color: white;
-      .pokemon-forms, .pokemon-type{
+      .pokemon-forms,
+      .pokemon-type {
         box-shadow: #0abde3 0px 7px 29px 0px;
         display: flex;
         flex-flow: column;
@@ -88,19 +90,41 @@
           margin: 0;
         }
       }
-      .pokemon-ability{
+      .pokemon-ability {
         .title {
           font-family: "Orbitron", sans-serif;
           font-weight: 400;
           margin: 0;
         }
-        .list-ability{
+        .list-ability {
           margin-top: 1rem;
-          .title-ability{
+          .title-ability {
             font-weight: bold;
           }
-          .desc-ability{
+          .desc-ability {
             font-family: "Open Sans", sans-serif;
+          }
+        }
+      }
+      .pokemon-stats {
+        width: 100%;
+        .title {
+          font-family: "Orbitron", sans-serif;
+          font-weight: 400;
+          margin: 0;
+        }
+        .list-stats {
+          font-family: "Open Sans", sans-serif;
+          .hp-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            h2{
+              font-weight: 300;
+              mat-progress-bar{
+                active-indicator-height: 10px;
+              }
+            }
           }
         }
       }
@@ -111,7 +135,15 @@
       align-items: start;
       justify-content: space-around;
     }
-    .row-2{
+    .row-2 {
+      box-shadow: #0abde3 0px 7px 29px 0px;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 2rem;
+      border: 2px solid white;
+      width: 50%;
+    }
+    .row-3{
       box-shadow: #0abde3 0px 7px 29px 0px;
       border-radius: 10px;
       padding: 10px;
