@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '@components/header/header.component';
 import { Pokemon } from '@interfaces/PokemonInterface';
+import { AbilityService } from '@services/ability/ability.service';
+import { CommonApiService } from '@services/commonApi/common-api.service';
 import { PokemonService } from '@services/pokemonService/pokemon.service';
 import { PokemonTypeService } from '@services/pokemonType/pokemon-type.service';
 import { UtilsService } from '@utils/utils.service';
@@ -35,7 +37,9 @@ export class PokemonDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private pokemonService: PokemonService,
     private pokemonTypeService: PokemonTypeService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private abilityService: AbilityService,
+    private commonApi: CommonApiService
   ) {
     this.route.paramMap.subscribe(params => {
       this.pokemonNameOrId = params.get('name');
@@ -58,56 +62,104 @@ export class PokemonDetailComponent implements OnInit {
           return of(null);
         }
         const result: any = response;
-        const dataTypes = result.types;
-        const obsDataType = dataTypes.map((dt: any) => this.pokemonTypeService.getPokemonTypeByName(dt.type.name).pipe(
+
+        const image = result.sprites['other']['dream_world']['front_default'];
+        const imageDefault = result.sprites['front_default'];
+
+        this.pokemon = {
+          id: result.id,
+          name: result.name,
+          height: result.height,
+          weight: result.weight,
+          image: image ? image : imageDefault,
+          abilities: result.abilities,
+          forms: result.forms,
+          stats: result.stats,
+          types: result.types,
+        }
+
+        return of(this.pokemon);
+      }), switchMap(response => {
+        const abilities = this.pokemon.abilities.map((ab: any) => ab.ability);
+        const forms = this.pokemon.forms;
+        const types = this.pokemon.types.map((t: any) => t.type);
+
+        const obsDataType$ = abilities.map((dt: any) => this.commonApi.get(dt.url).pipe(
           catchError(err => {
             return of([]);
           })
         ));
-        return forkJoin(obsDataType).pipe(
-          map(pokemonTypeDetails => ({ pokemonDetail: response, pokemonTypeDetails: pokemonTypeDetails }))
-        )
-      }),
-      tap(resultFalk => {
-        console.log('RESS', resultFalk)
-        const results: any = resultFalk;
-        const pokemonDetail = results.pokemonDetail;
-        const pokemonTypeDetails = results.pokemonTypeDetails;
-        if (pokemonDetail && pokemonTypeDetails) {
-          let pokemonType: any[] = []
 
-          const image = pokemonDetail.sprites['other']['dream_world']['front_default'];
-          const imageDefault = pokemonDetail.sprites['front_default'];
-          this.pokemon = {
-            id: this.utilsService.paddStartId(this.maxPokemon, pokemonDetail.id),
-            name: `${String(pokemonDetail.name).charAt(0).toUpperCase()}${String(pokemonDetail.name).slice(1).toLowerCase()}`,
-            height: pokemonDetail.height,
-            weight: pokemonDetail.weight,
-            image: image ? image : imageDefault,
-            abilities: pokemonDetail.abilities,
-            forms: pokemonDetail.forms,
-            stats: pokemonDetail.stats,
-            types: null
-          }
+        const obsForms$ = forms.map((f: any) => this.commonApi.get(f.url).pipe(
+          catchError(err => {
+            return of([]);
+          })
+        ))
 
-          if (pokemonTypeDetails.length != 0) {
-            for (let i = 0; i < pokemonTypeDetails.length; i++) {
-              pokemonType.push({
-                id: Math.random(),
-                sprites: pokemonTypeDetails[i].sprites
-              })
-            }
-          }
+       
+        const obsTypes$ = types.map((t: any) => this.commonApi.get(t.url).pipe(
+          catchError(err => {
+            return of([]);
+          })
+        ))
 
-          this.pokemon = {
-            ...this.pokemon,
-            types: pokemonType
-          }
-          console.log('this.pokemon', this.pokemon)
-        }
+        return forkJoin({
+          abilities: forkJoin(obsDataType$), 
+          forms: forkJoin(obsForms$),
+          types: forkJoin(obsTypes$),
+        })
       })
-    ).subscribe()
+    ).subscribe(res => {
+      const abilities = res.abilities;
+      const forms = res.forms;
+      const types = res.types;
+
+      this.pokemon = {
+        ...this.pokemon,
+        abilities: this.simplyfyAbilities(abilities),
+        forms: this.simplyfyForm(forms),
+        types: this.simplyfyTypes(types)
+      }
+
+      console.log('resresres', this.pokemon);
+    })
   }
 
+  simplyfyAbilities(abilities: any){
+    const abilityLocal: any[] = [];
+    for(let i = 0; i < abilities.length; i++){
+      abilityLocal.push({
+        id: abilities[i].id,
+        name: abilities[i].name,
+        label: abilities[i].names.find((name: any) => name.language.name === 'en'),
+        effect_entries: abilities[i].effect_entries.find((effect: any) => effect.language.name === 'en')
+      })
+    }
+    return abilityLocal;
+  }
 
+  simplyfyForm(forms: any){
+    const formsLocal: any[] = [];
+    for(let i = 0; i < forms.length; i++){
+      formsLocal.push({
+        id: forms[i].id,
+        name: `${String(forms[i].name).charAt(0).toUpperCase()}${String(forms[i].name).slice(1)}`,
+        image: forms[i].sprites['front_default'],
+      })
+    }
+    return formsLocal;
+  }
+
+  simplyfyTypes(types: any){
+    const TypesLocal: any[] = [];
+    for(let i = 0; i < types.length; i++){
+      TypesLocal.push({
+        id: types[i].id,
+        name: types[i].name,
+        label: types[i].names.find((name: any) => name.language.name === 'en'),
+        image: types[i].sprites['generation-v']['black-2-white-2']['name_icon'],
+      })
+    }
+    return TypesLocal;
+  }
 }
