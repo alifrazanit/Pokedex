@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
   getPokemon(){
     this.pokemonService.getPokemon().subscribe(res => {
       this.ListPokemon = res;
-      console.log('this.ListPokemon', this.ListPokemon);
     });
   }
 

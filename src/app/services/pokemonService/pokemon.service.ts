@@ -13,7 +13,7 @@ import { DDLPokemonType } from '@interfaces/DDLPokemonType';
 })
 export class PokemonService {
   private BASEURL: string = environment.pokemonApi;
-  private URL: string = 'pokemon?limit=1&offset=0';
+  private URL: string = 'pokemon?limit=2&offset=0';
   constructor(
     private commonApi: CommonApiService,
     private utilsService: UtilsService
@@ -36,16 +36,43 @@ export class PokemonService {
           map(pokemonDetails => ({ countData, pokemonDetails }))
         )
       }),
-      map(res => {
+      switchMap(res => {
         const results: any = res;
         const pokemonDetails = results.pokemonDetails;
         const countData = results.countData;
 
+        if (pokemonDetails.length === 0) {
+          return of([])
+        }
+
+        const listOfPokemon: any = pokemonDetails;
+        const DataTypes = listOfPokemon.flatMap((lop: any) => lop.types);
+        const ObsDataTypes = DataTypes.map((dt: { slot: any, type: any; }) => this.commonApi.get(dt.type.url).pipe(
+          catchError(err => {
+            return of([]);
+          })
+        ));
+        return forkJoin(ObsDataTypes).pipe(
+          map(pokemonTypeDetail => ({ countData, pokemonDetails, pokemonTypeDetail}))
+        )
+      }),
+      map(res => {
+        const results: any = res;
+        const pokemonDetails = results.pokemonDetails;
+        const countData = results.countData;
+        const pokemonTypeDetail = results.pokemonTypeDetail;
+        const filterTypes = pokemonTypeDetail.map((ptd: any) => ({
+          name: ptd.name,
+          id: ptd.id,
+          sprites: ptd.sprites
+        }))
+        console.log('filterTypes', filterTypes)
         const listOfPokemon: any = pokemonDetails;
         const dataReady: Pokemon[] = [];
 
         for (let i = 0; i < listOfPokemon.length; i++) {
           const image = listOfPokemon[i].sprites['other']['dream_world']['front_default'];
+        
           dataReady.push({
             id: this.utilsService.paddStartId(countData, listOfPokemon[i].id),
             name: `${String(listOfPokemon[i].name).charAt(0).toUpperCase()}${String(listOfPokemon[i].name).slice(1).toLowerCase()}`,
@@ -55,9 +82,11 @@ export class PokemonService {
             abilities: listOfPokemon[i].abilities,
             forms: listOfPokemon[i].forms,
             stats: listOfPokemon[i].stats,
-            types: listOfPokemon[i].types
+            types: filterTypes
           })
         }
+
+        console.log('dataReady', dataReady)
         return dataReady;
       })
     )

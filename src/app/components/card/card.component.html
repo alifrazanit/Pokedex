@@ -1,10 +1,14 @@
 <mat-card appearance="outlined">
     <mat-card-content>
         <div class="header-card-content">
-            <button mat-button>
-                <img src="/list-type/Fire-sm.svg" class="type" />
-            </button>
-            <button mat-button>
+            <div class="types-pokemon">
+                @for(item of pokemon.types; track item.id){
+                    <button mat-button>
+                        <img [src]="item.sprites['generation-vi']['omega-ruby-alpha-sapphire']['name_icon']" class="type" />
+                    </button>
+                }
+            </div>
+            <button mat-button class="bookmark-btn">
                 <img src="/Bookmark.svg" class="bookmark" />
             </button>
         </div>

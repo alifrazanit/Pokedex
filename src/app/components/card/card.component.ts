@@ -32,8 +32,8 @@ export class CardComponent implements OnChanges {
     if (changes['data'] && changes['data'].currentValue) {
       const pokemonData = changes['data'].currentValue;
       if (pokemonData) {
-        console.log('pokemonData', pokemonData)
         this.pokemon = pokemonData;
+        console.log('this.pokemon', this.pokemon)
       }
     }
   }

@@ -1,5 +1,5 @@
-mat-card:hover{
-    cursor: pointer;
+mat-card:hover {
+  cursor: pointer;
 }
 mat-card {
   width: 280px;
@@ -19,19 +19,29 @@ mat-card {
     width: 100%;
     height: 100%;
 
-    .bg-image{
-        position: absolute;
-        bottom: -10%;
-        right: -15%;
-        z-index: 1;
-        width: 10rem;
-        height: auto;
+    .bg-image {
+      position: absolute;
+      bottom: -10%;
+      right: -15%;
+      z-index: 1;
+      width: 10rem;
+      height: auto;
     }
   }
   .header-card-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    .types-pokemon {
+      display: flex;
+      flex-flow: column;
+    }
+    .bookmark-btn{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
     button {
       border-radius: 0px;
       * {
@@ -46,95 +56,95 @@ mat-card {
     justify-content: center;
     width: 100%;
     height: 18rem;
-    .container-image{
-        border-radius: 100%;
-        width: 200px;
-        height: 200px;
-        background-color: #61B3DB;
-        z-index: 2;
-        .main-image{
-            width: 100%;
-            height: 100%;
-        }
+    .container-image {
+      border-radius: 100%;
+      width: 200px;
+      height: 200px;
+      background-color: #61b3db;
+      z-index: 2;
+      .main-image {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
-  .footer-card-content{
+  .footer-card-content {
     color: white;
     padding-left: 16px;
     padding-right: 16px;
-    h2, h1{
-        margin: 0;
-        font-weight: 400;
+    h2,
+    h1 {
+      margin: 0;
+      font-weight: 400;
     }
-    .pokemon-code{
-        font-size: 16px;
+    .pokemon-code {
+      font-size: 16px;
     }
-    .pokemon-name{
-        font-size: 18px;
+    .pokemon-name {
+      font-size: 18px;
     }
   }
 }
 
-
 @media screen and (max-width: 630px) {
-    mat-card {
-        width: 280px;
-    }
+  mat-card {
+    width: 280px;
+  }
 }
 @media screen and (max-width: 590px) {
-    mat-card {
-        width: 260px;
-        .body-card-content {
-            .container-image{
-                width: 180px;
-                height: 180px;
-            }
-        }
+  mat-card {
+    width: 260px;
+    .body-card-content {
+      .container-image {
+        width: 180px;
+        height: 180px;
+      }
     }
+  }
 }
 @media screen and (max-width: 550px) {
-    mat-card {
-        width: 240px;
-    }
+  mat-card {
+    width: 240px;
+  }
 }
 @media screen and (max-width: 510px) {
-    mat-card {
-        width: 220px;
-    }
+  mat-card {
+    width: 220px;
+  }
 }
 @media screen and (max-width: 470px) {
-    mat-card {
-        width: 200px;
-        .body-card-content {
-            height: 15rem;
-            .container-image{
-                width: 150px;
-                height: 150px;
-            }
-        }
+  mat-card {
+    width: 200px;
+    .body-card-content {
+      height: 15rem;
+      .container-image {
+        width: 150px;
+        height: 150px;
+      }
     }
+  }
 }
 @media screen and (max-width: 430px) {
-    mat-card {
-        width: 18rem;
-        .body-card-content {
-            height: 18rem;
-            .container-image{
-                width: 180px;
-                height: 180px;
-            }
-        }
+  mat-card {
+    width: 18rem;
+    .body-card-content {
+      height: 18rem;
+      .container-image {
+        width: 180px;
+        height: 180px;
+      }
     }
+  }
 }
 @media screen and (max-width: 300px) {
-    mat-card {
+  mat-card {
+    width: 100%;
+    .body-card-content {
+      height: 100%;
+      .container-image {
         width: 100%;
-        .body-card-content {
-            height: 100%;
-            .container-image{
-                width: 100%;
-                height: 100%;
-            }
-        }
+        height: 100%;
+      }
     }
+  }
 }
