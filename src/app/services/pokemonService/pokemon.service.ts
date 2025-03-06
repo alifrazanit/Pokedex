@@ -19,8 +19,9 @@ export class PokemonService {
     private utilsService: UtilsService
   ) { }
 
-  getPokemon() {
-    return this.commonApi.get(`${this.BASEURL}${this.URL}`).pipe(
+  getPokemon(params?: any) {
+    const param = params ? params : null;
+    return this.commonApi.get(`${this.BASEURL}${this.URL}`, param).pipe(
       switchMap(res => {
         const countData = res.count;
         if (res.results.length === 0) {
@@ -62,5 +63,7 @@ export class PokemonService {
       })
     )
   }
+
+  
 
 }

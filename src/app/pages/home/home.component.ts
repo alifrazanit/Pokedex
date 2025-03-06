@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BannerComponent } from '@components/banner/banner.component';
 import { CardComponent } from '@components/card/card.component';
@@ -11,8 +11,7 @@ import { Pokemon } from '@interfaces/PokemonInterface';
 import { catchError, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { CommonApiService } from '@services/commonApi/common-api.service';
 import { UtilsService } from '@utils/utils.service';
-
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-home',
   imports: [
@@ -21,6 +20,7 @@ import { UtilsService } from '@utils/utils.service';
     BannerComponent,
     FieldSearchComponent,
     CardComponent,
+    MatProgressSpinnerModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -30,6 +30,21 @@ export class HomeComponent implements OnInit {
   DDLData: DDLPokemonType[] = [];
   ListPokemon: Pokemon[] = [];
   maxPokemon: number = 0;
+  pagination = {
+    limit: 20,
+    offset: 0
+  }
+
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    const position = window.innerHeight + window.scrollY;
+    const max = document.documentElement.scrollHeight;
+    if (position >= max) {
+      console.log('Sudah di akhir konten!');
+      this.getNextPokemon();
+    }
+  }
 
   constructor(
     private pokemonTypeService: PokemonTypeService,
@@ -38,9 +53,23 @@ export class HomeComponent implements OnInit {
     private utilsService: UtilsService
   ) { }
 
+
+
   ngOnInit(): void {
     this.getPokemonType();
     this.getPokemon();
+  }
+
+
+  getNextPokemon() {
+    this.pagination.offset += 20;
+    
+    console.log('this.pagination', this.pagination)
+    // const param = {
+    //   'limit': '',
+    //   'offset': ''
+    // }
+    // this.getPokemon();
   }
 
 
@@ -51,12 +80,14 @@ export class HomeComponent implements OnInit {
   }
 
   getPokemon() {
-    this.pokemonService.getPokemon().subscribe(res => {
+    this.pokemonService.getPokemon(this.pagination).subscribe(res => {
       const rows = res.rows;
       const countData = res.countData;
       this.maxPokemon = countData;
-
-      this.ListPokemon = rows;
+      setTimeout(() => {
+        this.ListPokemon = rows;
+      }, 5000)
+      
     });
   }
 

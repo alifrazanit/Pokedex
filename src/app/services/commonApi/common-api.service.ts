@@ -33,7 +33,6 @@ export class CommonApiService {
       // headers: this.getHeaders(),
       params: params ? new HttpParams({ fromObject: params }) : undefined
     };
-
     return this.http.get<ResponseAPI>(`${url}`, options).pipe(
       catchError(error => {
         return throwError(() => new Error('Something went wrong. Please try again.'));

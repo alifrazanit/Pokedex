@@ -2,10 +2,14 @@
 <app-banner />
 <app-field-search [DDLData]="DDLData" (onFilterEvent)="onChooseFilter($event)" />
 <div class="main-content-home">
+    @defer (on viewport) {
     @for(item of ListPokemon;track item.id){
-    <app-card 
-        [data]="item" 
-        (onClick)="onDetail($event)"
-        (onFavorite)="onFavorite($event)"/>
+    <app-card [data]="item" (onClick)="onDetail($event)" (onFavorite)="onFavorite($event)" />
     }
+    } @placeholder {
+    <mat-spinner></mat-spinner>
+    }
+    
+    <mat-spinner></mat-spinner>
+
 </div>

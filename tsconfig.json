@@ -28,6 +28,7 @@
       "@env/*":["src/environments/*"],
       "@interfaces/*":["src/app/interfaces/*"],
       "@pipes/*":["src/app/pipes/*"],
+      "@interceptors/*":["src/app/interceptors/*"],
     },
   },
   "angularCompilerOptions": {
