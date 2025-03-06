@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-flow: column;
     .pokemon-detail {
       width: 30rem;
       height: auto;
@@ -66,6 +67,9 @@
           }
         }
       }
+    }
+    .characteristic-details{
+      
     }
   }
 }
