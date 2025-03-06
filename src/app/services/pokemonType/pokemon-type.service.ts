@@ -47,4 +47,8 @@ export class PokemonTypeService {
     );
   }
 
+  getPokemonTypeByName(name: string){
+    return this.commonApi.get(`${this.BASEURL}${this.URL}/${name}`);
+  }
+
 }

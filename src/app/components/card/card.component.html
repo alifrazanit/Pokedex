@@ -3,9 +3,7 @@
         <div class="header-card-content">
             <div class="types-pokemon">
                 @for(item of pokemon.types; track item.id){
-                    <button mat-button>
-                        <img [src]="item.sprites['generation-vi']['omega-ruby-alpha-sapphire']['name_icon']" class="type" />
-                    </button>
+                <img [src]="item.sprites['generation-vi']['omega-ruby-alpha-sapphire']['name_icon']" class="type" />
                 }
             </div>
             <button mat-button class="bookmark-btn">

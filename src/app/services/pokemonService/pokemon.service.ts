@@ -13,7 +13,7 @@ import { DDLPokemonType } from '@interfaces/DDLPokemonType';
 })
 export class PokemonService {
   private BASEURL: string = environment.pokemonApi;
-  private URL: string = 'pokemon?limit=2&offset=0';
+  private URL: string = 'pokemon';
   constructor(
     private commonApi: CommonApiService,
     private utilsService: UtilsService
@@ -36,37 +36,10 @@ export class PokemonService {
           map(pokemonDetails => ({ countData, pokemonDetails }))
         )
       }),
-      switchMap(res => {
-        const results: any = res;
-        const pokemonDetails = results.pokemonDetails;
-        const countData = results.countData;
-
-        if (pokemonDetails.length === 0) {
-          return of([])
-        }
-
-        const listOfPokemon: any = pokemonDetails;
-        const DataTypes = listOfPokemon.flatMap((lop: any) => lop.types);
-        const ObsDataTypes = DataTypes.map((dt: { slot: any, type: any; }) => this.commonApi.get(dt.type.url).pipe(
-          catchError(err => {
-            return of([]);
-          })
-        ));
-        return forkJoin(ObsDataTypes).pipe(
-          map(pokemonTypeDetail => ({ countData, pokemonDetails, pokemonTypeDetail}))
-        )
-      }),
       map(res => {
         const results: any = res;
         const pokemonDetails = results.pokemonDetails;
         const countData = results.countData;
-        const pokemonTypeDetail = results.pokemonTypeDetail;
-        const filterTypes = pokemonTypeDetail.map((ptd: any) => ({
-          name: ptd.name,
-          id: ptd.id,
-          sprites: ptd.sprites
-        }))
-        console.log('filterTypes', filterTypes)
         const listOfPokemon: any = pokemonDetails;
         const dataReady: Pokemon[] = [];
 
@@ -82,11 +55,9 @@ export class PokemonService {
             abilities: listOfPokemon[i].abilities,
             forms: listOfPokemon[i].forms,
             stats: listOfPokemon[i].stats,
-            types: filterTypes
+            types: listOfPokemon[i].types
           })
         }
-
-        console.log('dataReady', dataReady)
         return dataReady;
       })
     )
