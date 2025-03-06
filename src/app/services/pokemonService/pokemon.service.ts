@@ -45,20 +45,20 @@ export class PokemonService {
 
         for (let i = 0; i < listOfPokemon.length; i++) {
           const image = listOfPokemon[i].sprites['other']['dream_world']['front_default'];
-        
+          const imageDefault = listOfPokemon[i].sprites['front_default'];
           dataReady.push({
             id: this.utilsService.paddStartId(countData, listOfPokemon[i].id),
             name: `${String(listOfPokemon[i].name).charAt(0).toUpperCase()}${String(listOfPokemon[i].name).slice(1).toLowerCase()}`,
             height: listOfPokemon[i].height,
             weight: listOfPokemon[i].weight,
-            image: image ? image : '/pokeball-color.svg',
+            image: image ? image : imageDefault,
             abilities: listOfPokemon[i].abilities,
             forms: listOfPokemon[i].forms,
             stats: listOfPokemon[i].stats,
             types: listOfPokemon[i].types
           })
         }
-        return dataReady;
+        return { rows: dataReady, countData: countData };
       })
     )
   }
