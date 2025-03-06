@@ -11,7 +11,7 @@ import { Pokemon } from '@interfaces/PokemonInterface';
 import { catchError, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { CommonApiService } from '@services/commonApi/common-api.service';
 import { UtilsService } from '@utils/utils.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-home',
   imports: [
@@ -32,8 +32,10 @@ export class HomeComponent implements OnInit {
   maxPokemon: number = 0;
   pagination = {
     limit: 20,
-    offset: 0
+    offset: 0,
+    maks: 0
   }
+  isFilter: boolean = false;
 
 
   @HostListener('window:scroll', [])
@@ -41,8 +43,9 @@ export class HomeComponent implements OnInit {
     const position = window.innerHeight + window.scrollY;
     const max = document.documentElement.scrollHeight;
     if (position >= max) {
-      console.log('Sudah di akhir konten!');
-      this.getNextPokemon();
+      if(!this.isFilter){
+        this.getNextPokemon();
+      } 
     }
   }
 
@@ -63,13 +66,7 @@ export class HomeComponent implements OnInit {
 
   getNextPokemon() {
     this.pagination.offset += 20;
-    
-    console.log('this.pagination', this.pagination)
-    // const param = {
-    //   'limit': '',
-    //   'offset': ''
-    // }
-    // this.getPokemon();
+    this.getPokemon();
   }
 
 
@@ -83,15 +80,15 @@ export class HomeComponent implements OnInit {
     this.pokemonService.getPokemon(this.pagination).subscribe(res => {
       const rows = res.rows;
       const countData = res.countData;
+      this.pagination.maks = countData;
       this.maxPokemon = countData;
-      setTimeout(() => {
-        this.ListPokemon = rows;
-      }, 5000)
-      
+      this.ListPokemon = this.ListPokemon.concat(rows);
     });
   }
 
   onChooseFilter(event: any) {
+    this.isFilter = true;
+    this.pagination.offset = 0;
     const pokemonType = event.pokemonType;
     this.pokemonTypeService.getPokemonTypeByName(pokemonType).pipe(
       switchMap(response => {
