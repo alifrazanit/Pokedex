@@ -119,8 +119,15 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            h2{
+            h3{
+              margin: 5px;
               font-weight: 300;
+              font-size: 14px;
+            }
+            h2{
+              margin: 5px;
+              font-weight: 300;
+              font-size: 14px;
               mat-progress-bar{
                 active-indicator-height: 10px;
               }

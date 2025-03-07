@@ -8,7 +8,7 @@ import { PokemonService } from '@services/pokemonService/pokemon.service';
 import { PokemonTypeService } from '@services/pokemonType/pokemon-type.service';
 import { UtilsService } from '@utils/utils.service';
 import { catchError, forkJoin, map, of, switchMap, tap } from 'rxjs';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-pokemon-detail',
@@ -33,7 +33,7 @@ export class PokemonDetailComponent implements OnInit {
     types: null,
     weight: 0
   };
- 
+
   maxPokemon: number = 0;
 
   constructor(
@@ -99,7 +99,7 @@ export class PokemonDetailComponent implements OnInit {
           })
         ))
 
-       
+
         const obsTypes$ = types.map((t: any) => this.commonApi.get(t.url).pipe(
           catchError(err => {
             return of([]);
@@ -107,7 +107,7 @@ export class PokemonDetailComponent implements OnInit {
         ))
 
         return forkJoin({
-          abilities: forkJoin(obsDataType$), 
+          abilities: forkJoin(obsDataType$),
           forms: forkJoin(obsForms$),
           types: forkJoin(obsTypes$),
         })
@@ -124,14 +124,12 @@ export class PokemonDetailComponent implements OnInit {
         forms: this.simplyfyForm(forms),
         types: this.simplyfyTypes(types)
       }
-
-      console.log('resresres', this.pokemon);
     })
   }
 
-  simplyfyAbilities(abilities: any){
+  simplyfyAbilities(abilities: any) {
     const abilityLocal: any[] = [];
-    for(let i = 0; i < abilities.length; i++){
+    for (let i = 0; i < abilities.length; i++) {
       abilityLocal.push({
         id: abilities[i].id,
         name: abilities[i].name,
@@ -142,9 +140,9 @@ export class PokemonDetailComponent implements OnInit {
     return abilityLocal;
   }
 
-  simplyfyForm(forms: any){
+  simplyfyForm(forms: any) {
     const formsLocal: any[] = [];
-    for(let i = 0; i < forms.length; i++){
+    for (let i = 0; i < forms.length; i++) {
       formsLocal.push({
         id: forms[i].id,
         name: `${String(forms[i].name).charAt(0).toUpperCase()}${String(forms[i].name).slice(1)}`,
@@ -154,9 +152,9 @@ export class PokemonDetailComponent implements OnInit {
     return formsLocal;
   }
 
-  simplyfyTypes(types: any){
+  simplyfyTypes(types: any) {
     const TypesLocal: any[] = [];
-    for(let i = 0; i < types.length; i++){
+    for (let i = 0; i < types.length; i++) {
       TypesLocal.push({
         id: types[i].id,
         name: types[i].name,
@@ -167,21 +165,22 @@ export class PokemonDetailComponent implements OnInit {
     return TypesLocal;
   }
 
-  simplyfyStats(stats: any){
+  simplyfyStats(stats: any) {
     const dataReady: any[] = [];
-    const numberLoop: any[] = [];
-    if(stats.length){
+
+    if (stats.length) {
       stats.forEach((s: any) => {
         const count = Math.floor(Number(s.base_stat) / 10);
         dataReady.push({
           id: Math.random(),
           name: s['stat']['name'],
           label: `${String(s.stat.name).toUpperCase()}`,
-          countStars: numberLoop.push(count),
           base_stat: s.base_stat
         })
       });
     }
+    console.log('dataReady', dataReady)
+
     return dataReady;
   }
 }
